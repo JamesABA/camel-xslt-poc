@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://camel.apache.org/schema/cxf"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+         http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+
+    <!-- Camel routing config and context -->
+
+    <!--
+    Routing message flow for POC :
+
+    - Receive (any) webservice defined in camelpoc-cxf
+    - Take body of webservice request as a message payload
+    - Log the payload
+    - Transform the payload with (any) valid xsl
+    - Log the payload
+    - Save the payload to file.. (for now).
+    - Log the payload
+    - Respond to the caller
+    -->
+
+
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+
+        <route id="contactUpdateRoute">
+            <from uri="cxf:bean:contactUpdateWS?dataFormat=PAYLOAD"/>
+            <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+            <to uri="xslt:xslt/mapContactName.xslt"/>
+            <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+            <to uri="file://target/output?fileName=contactupdate-$simple{date:now:yyyyMMdd-hhMMss}.xml"/>
+            <to uri="velocity:vm/contactUpdateResponse.vm"/>
+            <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+        </route>
+
+        <route id="camelPocRoute">
+            <from uri="cxf:bean:CamelPocWS?dataFormat=PAYLOAD&amp;allowStreaming=false"/>
+            <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+            <!--<log message="Body: ${body}" loggerRef="logger"/>-->
+            <to uri="xslt:xslt/mapCamelPoc.xslt"/>
+            <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+            <to uri="file://target/output?fileName=camelpoc-$simple{date:now:yyyyMMdd-hhMMss}.xml"/>
+            <to uri="velocity:vm/camelpocResponse.vm"/>
+            <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+        </route>
+
+    </camelContext>
+
+</beans>
+
+
+<!-- JamesA Dev notes :
+PAYLOAD (data format) is used for CXF endpoints here as we only need the SOAP body to work with in the Exchange object.
+However, caution is required..
+ After Camel version 2.8.2, 'streaming' mode is  switched on by default when using PAYLOAD data format. This is a wonderful
+ setting as it avoids DOM parsing of the inbound message and increases performance significantly in some circumstances.
+ Unfortunately, when using components such as XSLT transformers in the route, it 'occasionally' (read erratically) doesn't
+ seem to send the whole body, causing the transform to fail unexpectedly with a spurious error.
+
+ With great declarative power (such as Spring auto wiring, Camel auto type mapping) comes utter confusion.
+ -->
+

@@ -1,0 +1,9 @@
+#gitignore for camelpoc
+#ignore target folder, class files, intellij metadata, and logs.
+
+**/.class
+target/**
+logs/**
+.idea/**
+
+camelxsltpoc.iml
