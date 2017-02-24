@@ -9,6 +9,7 @@
     </bean>
 
     <import resource="classpath:camelpoc-cxf.xml"/>
+    <import resource="classpath:camelpoc-activemq.xml"/>
     <import resource="classpath:camelpoc-routes.xml"/>
 
 </beans>
