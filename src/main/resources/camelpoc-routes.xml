@@ -30,7 +30,7 @@
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
             <to uri="xslt:xslt/mapContactName.xslt"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-            <to uri="file://target/output?fileName=contactupdate-$simple{date:now:yyyyMMdd-hhMMss}.xml"/>
+            <to uri="file://target/outputCU?fileName=contactupdate-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
             <to uri="velocity:vm/contactUpdateResponse.vm"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
         </route>
@@ -38,10 +38,9 @@
         <route id="camelPocRoute">
             <from uri="cxf:bean:CamelPocWS?dataFormat=PAYLOAD&amp;allowStreaming=false"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-            <!--<log message="Body: ${body}" loggerRef="logger"/>-->
             <to uri="xslt:xslt/mapCamelPoc.xslt"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-            <to uri="file://target/output?fileName=camelpoc-$simple{date:now:yyyyMMdd-hhMMss}.xml"/>
+            <to uri="file://target/outputCP?fileName=camelpoc-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
             <to uri="velocity:vm/camelpocResponse.vm"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
         </route>
@@ -49,6 +48,7 @@
     </camelContext>
 
 </beans>
+        <!--<log message="Body: ${body}" loggerRef="logger"/>-->
 
 
 <!-- JamesA Dev notes :

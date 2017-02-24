@@ -9,10 +9,11 @@ CXF webservices
 
 Routing
 
-  XSLT transformer to map webservice body to a simple structure (GX)
-  File component to save transformed XML output
-  Velocity template to generate webservice response
-  Logging component used between each route step (DEBUG level)
+    CXF consumers (webservices)
+    XSLT transformer to map webservice body to a simple structure (GX)
+    File component to save transformed XML output
+    Velocity template to generate webservice response
+    Logging component used between each route step (DEBUG level)
   
 
 Logging
@@ -34,10 +35,27 @@ Running the code
       will scrub the target folder of all generated and compiled code
     
     mvn install 
-      will resolve dependancies, compile, and run tests
+      will resolve dependencies, compile, and run tests
       
     mvn jetty:run
       will launch the app 
       
       
  
+Next up :
+
+    Add a JMS consumer
+    Security options with camel for endpoints
+    'Dozer' component for bean mapping option
+    Drools integration?
+    Spring Namespace handlers / extensions of Camel Spring XML routing
+    ACORD standard services, routes, transformations for OOTB
+
+Improvements :
+
+    Externalise routing / endpoint config
+    Better xslt using namespaces
+    Better tests using mocked components
+    Properties files for various configuration options
+    XSD schema validation on GX transformed messages?
+

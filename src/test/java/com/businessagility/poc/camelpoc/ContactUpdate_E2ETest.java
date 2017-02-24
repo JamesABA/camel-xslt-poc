@@ -2,7 +2,9 @@ package com.businessagility.poc.camelpoc;
 
 
 import com.businessagility.poc.webservices.ContactUpdatePortType;
-import org.apache.camel.test.spring.*;
+import org.apache.camel.test.spring.CamelSpringRunner;
+import org.apache.camel.test.spring.CamelTestContextBootstrapper;
+import org.apache.camel.test.spring.DisableJmx;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(CamelSpringRunner.class)
 @BootstrapWith(CamelTestContextBootstrapper.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@MockEndpointsAndSkip("file:*")
+//@MockEndpointsAndSkip("file:*")
 
 @DisableJmx(false)
 
@@ -25,23 +27,12 @@ import static org.junit.Assert.assertEquals;
  *
  * More like a system test, not really 'unit', but will suffice for now.
  *
- * Going to try to launch the full integration layer, stub the file endpoint,
- *  and check its received summat..
+ * Going to try to launch the routes, and check that the webservice responds ok
+ *
  */
-public class E2ETest {
+public class ContactUpdate_E2ETest {
 
-
-    private final static String url_CP = "http://localhost:8090/camelxsltpoc/ws/CamelPoc";
     private final static String url_CU = "http://localhost:8090/camelxsltpoc/ws/ContactUpdate";
-
-    static CamelPocServicePortType createCPClient() {
-
-        JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
-        factory.setServiceClass(CamelPocServicePortType.class);
-        factory.setAddress(url_CP);
-
-        return (CamelPocServicePortType) factory.create();
-    }
 
     static ContactUpdatePortType createCUClient() {
 
@@ -53,33 +44,13 @@ public class E2ETest {
     }
 
     @Test
-    public void testCamelPocRoute()
-    {
-
-        CamelPocServicePortType client = createCPClient();
-
-        CamelPocRequestType in = new CamelPocRequestType();
-
-        in.setLastName("Tester");
-        in.setFirstName("Jimmy");
-
-        CamelPocResponseType response = client.setName(in);
-
-        assertEquals("Return code from service should be OK",response.getReturnCode(), "OK");
-
-    }
-
-    @Test
-    public void testCustomerUpdateRoute()
-    {
+    public void testCustomerUpdateRoute() {
 
         ContactUpdatePortType client = createCUClient();
 
-        String response = client.updateContact("ab:123","Jimmy", "Tester");
+        String response = client.updateContact("ab:123", "Jimmy", "Tester");
 
-        assertEquals("Return code from service should be OK",response, "OK");
-
+        assertEquals("Return code from service should be OK", response, "OK");
     }
-
 
 }
