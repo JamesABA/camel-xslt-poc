@@ -5,7 +5,6 @@
 
 <!-- Currently pretty much default AMQ/spring setup as defined at http://camel.apache.org/activemq.html -->
 
-    <!-- TODO : Put this in a test specific config -->
     <!-- Broker instance for test -->
     <bean id="broker" class="org.apache.activemq.xbean.BrokerFactoryBean">
         <property name="config" value="classpath:activemq/activemq-broker.xml" />

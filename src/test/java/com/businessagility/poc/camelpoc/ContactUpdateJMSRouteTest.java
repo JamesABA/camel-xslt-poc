@@ -27,12 +27,12 @@ import static org.junit.Assert.assertNotNull;
 @MockEndpoints
 public class ContactUpdateJMSRouteTest {
 
-    public static final String MESSAGE = "<ATestMessage><FirstName>JMSfirstname</FirstName><LastName>JMSlastname</LastName></ATestMessage>";
+    public static final String MESSAGE = "<ATestMessage><PublicID>cc:1234</PublicID><FirstName>JMSfirstname</FirstName><LastName>JMSlastname</LastName></ATestMessage>";
 
     @Autowired
     CamelContext context;
 
-    //TODO: Again, not happy with this as ActiveMQ broker needs to be up.
+    //TODO: Not happy with this as ActiveMQ broker needs to be up. Perhaps 'adviceWith' the endpoint so it uses a 'direct' EP for test?
     @Produce(uri = "activemq:queue:camelpoc.requestQ")
     ProducerTemplate producerJMS;
 
@@ -47,6 +47,10 @@ public class ContactUpdateJMSRouteTest {
 
     @EndpointInject(uri = "mock:activemq:queue:camelpoc.responseQ")
     MockEndpoint responseQ;
+
+    @EndpointInject(uri = "mock:activemq:queue:camelpoc.anotherQ")
+    MockEndpoint anotherQ;
+
 
     @Test
     public void testMockEndpointsAvailable() throws InterruptedException {
@@ -94,5 +98,18 @@ public class ContactUpdateJMSRouteTest {
 
         responseQ.assertIsSatisfied();
     }
+
+    //This test is written to cover the filtered route based on xpath expression
+    // but it isnt finished yet.
+//    @Test
+//    public void testAnotherQueue() throws InterruptedException {
+//        anotherQ.expectedMessageCount(1);
+//        //responseQ.expectedBodiesReceived(VM_MESSAGE);
+//
+//        producerJMS.sendBody(MESSAGE);
+//
+//        anotherQ.assertIsSatisfied();
+//    }
+//
 
 }

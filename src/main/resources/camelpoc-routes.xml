@@ -9,20 +9,6 @@
 
     <!-- Camel routing config and context -->
 
-    <!--
-    Routing message flow for POC :
-
-    - Receive (any) webservice defined in camelpoc-cxf
-    - Take body of webservice request as a message payload
-    - Log the payload
-    - Transform the payload with (any) valid xsl
-    - Log the payload
-    - Save the payload to file.. (for now).
-    - Log the payload
-    - Respond to the caller
-    -->
-
-
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
 
         <route id="contactUpdateWSRoute">
@@ -38,11 +24,15 @@
         <route id="contactUpdateJMSRoute">
             <from uri="activemq:queue:camelpoc.requestQ"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-            <!--<to uri="xslt:xslt/mapContactName.xslt"/>-->
+            <to uri="xslt:xslt/mapJMSRequest.xslt"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
             <to uri="file://target/outputJMS?fileName=camelpocJMS-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
+            <!--<filter>-->
+                <!--&lt;!&ndash;<xpath saxon="true">//PublicID[starts-with(text(),'cc')]</xpath>&ndash;&gt;-->
+                <!--<xpath saxon="true">starts-with(//PublicID/.,'cc')</xpath>-->
+                <!--<to uri="activemq:queue:camelpoc.anotherQ"/>-->
+            <!--</filter>-->
             <to uri="velocity:vm/camelpocJMSResponse.vm"/>
-            <!--<to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>-->
             <to uri="activemq:queue:camelpoc.responseQ"/>
         </route>
 

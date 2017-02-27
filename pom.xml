@@ -8,8 +8,7 @@
     <name>camel-xslt-poc Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <description>
-        Camel-xslt-poc is a proof of concept using camel to generate a simple pipes-and-filters eip that takes an
-        arbitrary wsdl, performs a mapping transformation and saves the xml payload in a predefined format
+        Camel-xslt-poc is a proof of concept using camel, xslt, CXF, AMQ
     </description>
 
     <properties>
@@ -108,6 +107,14 @@
             <version>${camel-version}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.camel/camel-saxon -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-saxon</artifactId>
+            <version>${camel-version}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-client</artifactId>
@@ -131,7 +138,6 @@
             <artifactId>activemq-kahadb-store</artifactId>
             <version>${activeMQ-version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.apache.activemq</groupId>
