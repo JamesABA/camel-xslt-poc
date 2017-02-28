@@ -8,7 +8,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:camelpoc-config.xml</param-value>
+    <param-value>classpath:spring/camelpoc-config.xml</param-value>
   </context-param>
 
   <listener>

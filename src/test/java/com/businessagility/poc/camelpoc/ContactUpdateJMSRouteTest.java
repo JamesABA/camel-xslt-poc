@@ -23,7 +23,7 @@ import static org.junit.Assert.assertNotNull;
 @BootstrapWith(CamelTestContextBootstrapper.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @DisableJmx(false)
-@ContextConfiguration("classpath:camelpoc-config.xml")
+@ContextConfiguration("classpath:spring/camelpoc-config.xml")
 @MockEndpoints
 public class ContactUpdateJMSRouteTest {
 

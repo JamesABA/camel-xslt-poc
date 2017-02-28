@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNotNull;
 @BootstrapWith(CamelTestContextBootstrapper.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @DisableJmx(false)
-@ContextConfiguration("classpath:camelpoc-config.xml")
+@ContextConfiguration("classpath:spring/camelpoc-config.xml")
 @MockEndpoints
 /**
  * Created by JamesAyling on 23/02/2017.

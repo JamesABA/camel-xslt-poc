@@ -28,7 +28,7 @@
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
             <to uri="file://target/outputJMS?fileName=camelpocJMS-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
             <!--<filter>-->
-                <!--&lt;!&ndash;<xpath saxon="true">//PublicID[starts-with(text(),'cc')]</xpath>&ndash;&gt;-->
+                <!--<xpath saxon="true">//PublicID[starts-with(text(),'cc')]</xpath>-->
                 <!--<xpath saxon="true">starts-with(//PublicID/.,'cc')</xpath>-->
                 <!--<to uri="activemq:queue:camelpoc.anotherQ"/>-->
             <!--</filter>-->
@@ -51,6 +51,10 @@ However, caution is required..
  Unfortunately, when using components such as XSLT transformers in the route, it 'occasionally' (read erratically) doesn't
  seem to send the whole body, causing the transform to fail unexpectedly with a spurious error.
 
- With great declarative power (such as Spring auto wiring, Camel auto type mapping) comes utter confusion.
+ Further reading on streams suggests 2 options here :
+
+ 1- disable streaming via the query string (?allowStreaming=false) or by system variable.
+ 2- convert body to String
+
  -->
 

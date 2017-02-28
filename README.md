@@ -30,10 +30,10 @@ Routing
 
 Logging
 
-  SLF4j with console and rollingfile appenders
-    Configured in 'src/main/resources/log4j2.xml'
+    SLF4j with console and rollingfile appenders
+        Configured in 'src/main/resources/log4j2.xml'
   
-  Set the 'Root' level attribute to debug if you want to see detailed runtime info
+    Set the 'Root' level attribute to debug if you want to see detailed runtime info
 
 
 Running the code 

@@ -5,6 +5,7 @@ import com.businessagility.poc.webservices.ContactUpdatePortType;
 import org.apache.camel.test.spring.CamelSpringRunner;
 import org.apache.camel.test.spring.CamelTestContextBootstrapper;
 import org.apache.camel.test.spring.DisableJmx;
+import org.apache.camel.test.spring.MockEndpointsAndSkip;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,11 +18,12 @@ import static org.junit.Assert.assertEquals;
 @RunWith(CamelSpringRunner.class)
 @BootstrapWith(CamelTestContextBootstrapper.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-//@MockEndpointsAndSkip("file:*")
 
+//Make sure we don't write output to file as the result of this test
+@MockEndpointsAndSkip("file*")
 @DisableJmx(false)
 
-@ContextConfiguration("classpath:camelpoc-config.xml")
+@ContextConfiguration("classpath:spring/camelpoc-config.xml")
 /**
  * Created by JamesAyling on 21/02/2017.
  *

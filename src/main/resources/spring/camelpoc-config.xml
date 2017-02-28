@@ -8,9 +8,9 @@
         <constructor-arg value="com.businessagility.poc.camelpoc" />
     </bean>
 
-    <import resource="classpath:camelpoc-cxf.xml"/>
-    <import resource="classpath:camelpoc-activemq.xml"/>
-    <import resource="classpath:camelpoc-routes.xml"/>
+    <import resource="classpath:spring/camelpoc-cxf.xml"/>
+    <import resource="classpath:spring/camelpoc-activemq.xml"/>
+    <import resource="classpath:spring/camelpoc-routes.xml"/>
 
 </beans>
 
