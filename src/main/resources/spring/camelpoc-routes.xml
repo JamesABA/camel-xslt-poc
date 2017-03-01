@@ -2,53 +2,59 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:cxf="http://camel.apache.org/schema/cxf"
+
        xsi:schemaLocation="
          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
          http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
          http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd">
 
-    <!-- Camel routing config and context -->
+    <!-- Camel routing contexts -->
 
-    <!--
-    Routing message flow for POC :
+    <!-- Simple synchronous webservice to XSLT to file route -->
+    <routeContext id="routeWS" xmlns="http://camel.apache.org/schema/spring">
 
-    - Receive (any) webservice defined in camelpoc-cxf
-    - Take body of webservice request as a message payload
-    - Log the payload
-    - Transform the payload with (any) valid xsl
-    - Log the payload
-    - Save the payload to file.. (for now).
-    - Log the payload
-    - Respond to the caller
-    -->
-
-
-    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-
-        <route id="contactUpdateRoute">
+        <route id="contactUpdateWSRoute">
             <from uri="cxf:bean:contactUpdateWS?dataFormat=PAYLOAD"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
             <to uri="xslt:xslt/mapContactName.xslt"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-            <to uri="file://target/output?fileName=contactupdate-$simple{date:now:yyyyMMdd-hhMMss}.xml"/>
+            <to uri="file://target/outputCU?fileName=contactupdate-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
             <to uri="velocity:vm/contactUpdateResponse.vm"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
         </route>
+    </routeContext>
 
-        <route id="camelPocRoute">
-            <from uri="cxf:bean:CamelPocWS?dataFormat=PAYLOAD&amp;allowStreaming=false"/>
+
+    <!-- JMS to JMS with content based routing -->
+    <routeContext id="routeJMS" xmlns="http://camel.apache.org/schema/spring" xmlns:pn="http://guidewire.com/cc/gx/PersonModel.gx">
+
+        <route id="contactUpdateJMSRoute">
+            <from uri="activemq:queue:camelpoc.requestQ"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-            <!--<log message="Body: ${body}" loggerRef="logger"/>-->
-            <to uri="xslt:xslt/mapCamelPoc.xslt"/>
+            <to uri="xslt:xslt/mapJMSRequest.xslt"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-            <to uri="file://target/output?fileName=camelpoc-$simple{date:now:yyyyMMdd-hhMMss}.xml"/>
-            <to uri="velocity:vm/camelpocResponse.vm"/>
+            <to uri="file://target/outputJMS?fileName=camelpocJMS-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
+            <setHeader headerName="publicID">
+                <xpath resultType="java.lang.String">//pn:PublicID</xpath>
+            </setHeader>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+            <choice>
+                <when>
+                    <simple>${header[publicID]} starts with 'cc'</simple>
+                    <to uri="activemq:queue:camelpoc.ccQ"/>
+                </when>
+                <when>
+                    <simple>${header[publicID]} starts with 'ab'</simple>
+                    <to uri="activemq:queue:camelpoc.abQ"/>
+                </when>
+            </choice>
+            <to uri="velocity:vm/camelpocJMSResponse.vm"/>
+            <to uri="activemq:queue:camelpoc.responseQ"/>
         </route>
-
-    </camelContext>
+    </routeContext>
 
 </beans>
+        <!--<log message="Body: ${body}" loggerRef="logger"/>-->
 
 
 <!-- JamesA Dev notes :
@@ -59,6 +65,10 @@ However, caution is required..
  Unfortunately, when using components such as XSLT transformers in the route, it 'occasionally' (read erratically) doesn't
  seem to send the whole body, causing the transform to fail unexpectedly with a spurious error.
 
- With great declarative power (such as Spring auto wiring, Camel auto type mapping) comes utter confusion.
+ Further reading on streams suggests 2 options here :
+
+ 1- disable streaming via the query string (?allowStreaming=false) or by system variable.
+ 2- convert body to String
+
  -->
 

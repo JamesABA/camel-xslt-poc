@@ -18,14 +18,5 @@
     />
 
 
-    <cxf:cxfEndpoint id="CamelPocWS"
-                     address="http://localhost:8090/camelxsltpoc/ws/CamelPoc"
-                     endpointName="s:CamelPocPort"
-                     serviceName="s:CamelPocService"
-                     wsdlURL="wsdl/CamelPoc.wsdl"
-                     xmlns:s="http://camelpoc.poc.businessagility.com"
-
-    />
-
 </beans>
 

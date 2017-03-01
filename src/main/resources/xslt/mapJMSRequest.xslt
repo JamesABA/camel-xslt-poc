@@ -3,13 +3,13 @@
     <xsl:template match="/">
         <Person xmlns="http://guidewire.com/cc/gx/PersonModel.gx">
             <FirstName>
-                <xsl:value-of select="//firstName"/>
+                <xsl:value-of select="//*[contains(local-name(),'irstName')]"/>
             </FirstName>
             <LastName>
-                <xsl:value-of select="//lastName"/>
+                <xsl:value-of select="//*[substring(name(), string-length(name()) - 6) = 'astName']"/>
             </LastName>
             <PublicID>
-                <xsl:value-of select="//PublicID"/>
+                <xsl:value-of select="//*[substring(name(), string-length(name()) - 6) = 'ublicID']"/>
             </PublicID>
         </Person>
     </xsl:template>
