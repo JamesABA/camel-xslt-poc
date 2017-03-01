@@ -124,7 +124,7 @@ public class ContactUpdateWSRouteTest {
 //    public void testFileComponent() throws InterruptedException {
 //        fileComponent.expectedMinimumMessageCount(1);
 //
-//        startContactUpdate.sendBody(MESSAGE);
+//        startContactUpdate.sendBody(MESSAGECC);
 //
 //        fileComponent.assertIsSatisfied();
 //

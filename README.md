@@ -1,5 +1,5 @@
 # camel-xslt-poc
-A proof of concept using cxf webservices, camel routing and xslt with minimal lines of code (currently 0 excluding tests)
+A proof of concept using cxf webservices, ActiveMQ, camel routing and xslt with minimal lines of code (currently 0 excluding tests)
 
 CXF web services
 
@@ -8,7 +8,7 @@ CXF web services
 
 JMS
 
-    Simple request / response queue using ActiveMQ
+    Simple request / response queue using ActiveMQ and a CBR EIP
 
 
 Routing
@@ -21,10 +21,12 @@ Routing
     Logging component used between each route step (DEBUG level)
 
     Route2:
-    JMS inbound queue (Camel ActiveMQ consumer)
-    File component
-    Logger
-    JMS outbound queue (Camel ActiveMQ producer)
+    JMS inbound queue
+    XSLT transformer to map message body to a simple structure (GX)
+    File component to save transformed XML output
+    Logging component used between each route step (DEBUG level)
+    CBR filter to pass on JMS to queue based on XML element content
+    JMS response queue
 
 
 
@@ -63,7 +65,7 @@ Next up :
     'Dozer' component for bean mapping option
     Drools integration?
     Spring Namespace handlers / extensions of Camel Spring XML routing
-    ACORD standard services, routes, transformations for OOTB
+    Industry standard (WEB/RESTful) services, routes, transformations for OOTB
 
 
 Improvements :

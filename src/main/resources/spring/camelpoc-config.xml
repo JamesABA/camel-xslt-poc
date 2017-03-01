@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation=
+               "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <!-- Main spring config -->
     <bean id="logger" class="org.slf4j.LoggerFactory" factory-method="getLogger" xmlns="http://www.springframework.org/schema/beans">
@@ -11,6 +13,14 @@
     <import resource="classpath:spring/camelpoc-cxf.xml"/>
     <import resource="classpath:spring/camelpoc-activemq.xml"/>
     <import resource="classpath:spring/camelpoc-routes.xml"/>
+
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+
+        <!--<streamCaching id="myCacheConfig" bufferSize="16384" spoolDirectory="/tmp/cachedir" spoolThreshold="65536"/>-->
+
+        <routeContextRef ref="routeJMS"/>
+        <routeContextRef ref="routeWS"/>
+    </camelContext>
 
 </beans>
 

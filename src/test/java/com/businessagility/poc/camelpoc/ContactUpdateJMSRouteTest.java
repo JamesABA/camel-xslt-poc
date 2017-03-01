@@ -27,8 +27,8 @@ import static org.junit.Assert.assertNotNull;
 @MockEndpoints
 public class ContactUpdateJMSRouteTest {
 
-    public static final String MESSAGE = "<ATestMessage><PublicID>cc:1234</PublicID><FirstName>JMSfirstname</FirstName><LastName>JMSlastname</LastName></ATestMessage>";
-
+    public static final String MESSAGECC = "<ATestMessage><PublicID>cc:1234</PublicID><FirstName>JMSfirstnameCC</FirstName><LastName>JMSlastname</LastName></ATestMessage>";
+    public static final String MESSAGEAB = "<ATestMessage><PublicID>ab:1234</PublicID><FirstName>JMSfirstnameAB</FirstName><LastName>JMSlastname</LastName></ATestMessage>";
     @Autowired
     CamelContext context;
 
@@ -48,9 +48,11 @@ public class ContactUpdateJMSRouteTest {
     @EndpointInject(uri = "mock:activemq:queue:camelpoc.responseQ")
     MockEndpoint responseQ;
 
-    @EndpointInject(uri = "mock:activemq:queue:camelpoc.anotherQ")
-    MockEndpoint anotherQ;
+    @EndpointInject(uri = "mock:activemq:queue:camelpoc.ccQ")
+    MockEndpoint ccQ;
 
+    @EndpointInject(uri = "mock:activemq:queue:camelpoc.abQ")
+    MockEndpoint abQ;
 
     @Test
     public void testMockEndpointsAvailable() throws InterruptedException {
@@ -65,7 +67,7 @@ public class ContactUpdateJMSRouteTest {
     public void testVelocityComponent() throws InterruptedException {
         velocityComponent.expectedMessageCount(1);
 
-        producerJMS.sendBody(MESSAGE);
+        producerJMS.sendBody(MESSAGECC);
 
         velocityComponent.assertIsSatisfied();
     }
@@ -74,7 +76,7 @@ public class ContactUpdateJMSRouteTest {
     public void testLogComponent() throws InterruptedException {
         logComponent.expectedMessageCount(2);
 
-        producerJMS.sendBody(MESSAGE);
+        producerJMS.sendBody(MESSAGECC);
 
         logComponent.assertIsSatisfied();
     }
@@ -82,9 +84,9 @@ public class ContactUpdateJMSRouteTest {
     @Test
     public void testRequestQueue() throws InterruptedException {
         requestQ.expectedMessageCount(1);
-        requestQ.expectedBodiesReceived(MESSAGE);
+        requestQ.expectedBodiesReceived(MESSAGECC);
 
-        producerJMS.sendBody(MESSAGE);
+        producerJMS.sendBody(MESSAGECC);
 
         requestQ.assertIsSatisfied();
     }
@@ -94,22 +96,22 @@ public class ContactUpdateJMSRouteTest {
         responseQ.expectedMessageCount(1);
         //responseQ.expectedBodiesReceived(VM_MESSAGE);
 
-        producerJMS.sendBody(MESSAGE);
+        producerJMS.sendBody(MESSAGECC);
 
         responseQ.assertIsSatisfied();
     }
 
-    //This test is written to cover the filtered route based on xpath expression
-    // but it isnt finished yet.
-//    @Test
-//    public void testAnotherQueue() throws InterruptedException {
-//        anotherQ.expectedMessageCount(1);
-//        //responseQ.expectedBodiesReceived(VM_MESSAGE);
-//
-//        producerJMS.sendBody(MESSAGE);
-//
-//        anotherQ.assertIsSatisfied();
-//    }
-//
+    @Test
+    public void testCBRouting() throws InterruptedException {
+        ccQ.expectedMessageCount(1);
+        abQ.expectedMessageCount(1);
+
+        producerJMS.sendBody(MESSAGECC);
+        producerJMS.sendBody(MESSAGEAB);
+
+        ccQ.assertIsSatisfied();
+        abQ.assertIsSatisfied();
+    }
+
 
 }
