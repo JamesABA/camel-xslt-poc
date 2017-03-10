@@ -1,5 +1,7 @@
 # camel-xslt-poc
-A proof of concept using cxf webservices, ActiveMQ, camel routing and xslt with minimal lines of code (currently 0 excluding tests)
+A proof of concept using cxf webservices, ActiveMQ, camel routing and xslt with minimal lines of code
+- Now Tomcat compliant
+- Externally configurable in '/AB2/Configuration/override.properties'
 
 CXF web services
 
@@ -8,7 +10,7 @@ CXF web services
 
 JMS
 
-    Simple request / response queue using ActiveMQ and a CBR EIP
+    Simple request / response queue using CSF, ActiveMQ and a CBR EIP
 
 
 Routing
@@ -58,22 +60,19 @@ Running the code
  
 Next up :
 
-    Add a JMS consumer
     Error handling
-    Conditional routing example
+	RESTful service consumers
     Security options with camel for endpoints
-    'Dozer' component for bean mapping option
+    'Dozer' component for bean mapping option?
     Drools integration?
     Spring Namespace handlers / extensions of Camel Spring XML routing
-    Industry standard (WEB/RESTful) services, routes, transformations for OOTB
+    Industry standard services, routes, transformations for standard deployment pattern
 
 
 Improvements :
 
-    Externalise routing / endpoint config
     Better xslt using namespaces
-    Better tests using mocked components
-    Properties files for various configuration options
+    Extend Properties for logging folder etc
     XSD schema validation on GX transformed messages?
-    Tomcat/other container compliance (currently jetty only)
+
 

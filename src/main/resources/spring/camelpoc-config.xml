@@ -6,21 +6,39 @@
                 http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <!-- Main spring config -->
-    <bean id="logger" class="org.slf4j.LoggerFactory" factory-method="getLogger" xmlns="http://www.springframework.org/schema/beans">
-        <constructor-arg value="com.businessagility.poc.camelpoc" />
+
+    <bean id="configprops" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:configuration/default.properties</value>
+                <value>file:/AB2/Configuration/override.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound">
+            <value>true</value>
+        </property>
     </bean>
 
-    <import resource="classpath:spring/camelpoc-cxf.xml"/>
-    <import resource="classpath:spring/camelpoc-activemq.xml"/>
-    <import resource="classpath:spring/camelpoc-routes.xml"/>
+    <bean id="logger" class="org.slf4j.LoggerFactory" factory-method="getLogger"
+          xmlns="http://www.springframework.org/schema/beans">
+        <constructor-arg value="com.businessagility.poc.camelpoc"/>
+    </bean>
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+    <!--<import resource="classpath:spring/camelpoc-activemq.xml"/>-->
 
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-
-        <!--<streamCaching id="myCacheConfig" bufferSize="16384" spoolDirectory="/tmp/cachedir" spoolThreshold="65536"/>-->
-
-        <routeContextRef ref="routeJMS"/>
-        <routeContextRef ref="routeWS"/>
+        <streamCaching id="myCacheConfig" bufferSize="16384" spoolDirectory="/tmp/cachedir" spoolThreshold="65536"/>
     </camelContext>
+
+    <!-- bean to dynamically load routes -->
+    <bean id="extRouteLoader" class="com.businessagility.poc.routing.RouteLoader">
+        <constructor-arg value ="${route.configuration.folder}"/>
+        <constructor-arg ref="camel" />
+        <constructor-arg ref="logger"/>
+    </bean>
 
 </beans>
 

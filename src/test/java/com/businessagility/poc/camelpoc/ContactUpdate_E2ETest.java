@@ -34,7 +34,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class ContactUpdate_E2ETest {
 
-    private final static String url_CU = "http://localhost:8090/camelxsltpoc/ws/ContactUpdate";
+    private final static String url_CU = "http://localhost:9090/ws/ContactUpdate";
 
     static ContactUpdatePortType createCUClient() {
 
@@ -44,6 +44,12 @@ public class ContactUpdate_E2ETest {
 
         return (ContactUpdatePortType) factory.create();
     }
+
+//    @Test
+//    public void dummyTest()
+//    {
+//        assert(true);
+//    }
 
     @Test
     public void testCustomerUpdateRoute() {
