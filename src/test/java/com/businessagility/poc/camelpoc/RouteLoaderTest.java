@@ -84,7 +84,7 @@ public class RouteLoaderTest {
         assertNotNull(context.hasEndpoint("mock:log:com.businessagility.poc.camelpoc.TEST"));
         assertNotNull(context.hasEndpoint("mock:xslt:xslt/mapContactName.xslt"));
         assertNotNull(context.hasEndpoint("mock:file://target/outputCU"));
-        assertNotNull(context.hasEndpoint("mock:direct:end"));
+
     }
 
     @Test

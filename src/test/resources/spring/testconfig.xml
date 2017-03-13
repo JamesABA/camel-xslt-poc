@@ -6,7 +6,6 @@
                 http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <!-- TEST spring config -->
-
     <bean id="configprops" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="locations">
             <list>
@@ -23,7 +22,9 @@
         <constructor-arg value="com.businessagility.poc.camelpoc.TEST"/>
     </bean>
 
-    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring"/>
+    <import resource="classpath:spring/testactivemq.xml"/>
+
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring" xmlns:pn="http://guidewire.com/cc/gx/PersonModel.gx"/>
 
     <!-- bean to dynamically load routes -->
     <bean id="extRouteLoader" class="com.businessagility.poc.routing.RouteLoader">

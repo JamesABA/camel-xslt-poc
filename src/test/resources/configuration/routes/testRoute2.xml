@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<routes xmlns="http://camel.apache.org/schema/spring">
+<routes xmlns="http://camel.apache.org/schema/spring" xmlns:pn="http://guidewire.com/cc/gx/PersonModel.gx">
     <!-- Test route -->
-    <route id="testRoute2">
-        <from uri="direct:end"/>
-        <to uri="direct:testend"/>
+    <route id="contactUpdateJMS">
+        <from uri="activemq:queue:camelpoc.requestQ"/>
+        <setProperty propertyName="namespace">
+            <simple>xmlns:pn="http://guidewire.com/cc/gx/PersonModel.gx"</simple>
+        </setProperty>
+        <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+        <to uri="xslt:xslt/mapJMSRequest.xslt"/>
+        <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+        <to uri="file://target/outputJMS?fileName=camelpocJMS-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
+        <setHeader headerName="publicID">
+            <xpath logNamespaces="true" resultType="java.lang.String">//PublicID</xpath>
+        </setHeader>
+        <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+        <choice>
+            <when>
+                <simple>${header[publicID]} starts with 'cc'</simple>
+                <to uri="activemq:queue:camelpoc.ccQ"/>
+            </when>
+            <when>
+                <simple>${header[publicID]} starts with 'ab'</simple>
+                <to uri="activemq:queue:camelpoc.abQ"/>
+            </when>
+            <otherwise>
+                <to uri="activemq:queue:camelpoc.deadletterQ"/>
+            </otherwise>
+        </choice>
+        <to uri="velocity:vm/camelpocJMSResponse.vm"/>
+        <to uri="activemq:queue:camelpoc.responseQ"/>
     </route>
 
 </routes>

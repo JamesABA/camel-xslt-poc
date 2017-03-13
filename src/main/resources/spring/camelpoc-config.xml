@@ -10,7 +10,7 @@
         <property name="locations">
             <list>
                 <value>classpath:configuration/default.properties</value>
-                <value>file:/AB2/Configuration/override.properties</value>
+                <value>file:/AB2/configuration/override.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound">
@@ -26,6 +26,7 @@
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
+    <!-- We can add a ref to the AMQ broker if required, currently only used in test -->
     <!--<import resource="classpath:spring/camelpoc-activemq.xml"/>-->
 
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">

@@ -4,11 +4,11 @@
     <groupId>com.businessagility.poc</groupId>
     <artifactId>camel-xslt-poc</artifactId>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>camel-xslt-poc Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <description>
-        Camel-xslt-poc is a proof of concept using camel, xslt, CXF, AMQ
+        Camel-xslt-poc is a proof of concept using camel, xslt, cxf, amq
     </description>
 
     <properties>
@@ -25,10 +25,9 @@
         <activeMQ-version>5.14.3</activeMQ-version>
     </properties>
 
-    <!-- TODO: Lots of dependencies here, and not all may be needed. Rationalisation required -->
+    <!-- TODO: Lots of dependencies here, Rationalisation required if possible -->
 
     <dependencies>
-
 
         <dependency>
             <groupId>org.apache.camel</groupId>
@@ -44,7 +43,7 @@
 
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-cxf</artifactId>
+            <artifactId>camel-jms</artifactId>
             <version>${camel-version}</version>
         </dependency>
 
@@ -60,6 +59,13 @@
             <version>${spring-version}</version>
         </dependency>
 
+        <!-- CXF libs -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-cxf</artifactId>
+            <version>${camel-version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-core</artifactId>
@@ -72,46 +78,30 @@
             <version>${cxf-version}</version>
         </dependency>
 
-        <!-- regular http transport -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http</artifactId>
             <version>${cxf-version}</version>
         </dependency>
 
+        <!-- TODO: try to pull this lib, need tomcat test to ensure it's not required -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-bindings-soap</artifactId>
             <version>${cxf-version}</version>
         </dependency>
 
+        <!-- Velocity templates -->
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-velocity</artifactId>
             <version>${camel-version}</version>
         </dependency>
 
+        <!-- AMQ Client -->
          <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-client</artifactId>
-            <version>${activeMQ-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-broker</artifactId>
-            <version>${activeMQ-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-openwire-legacy</artifactId>
-            <version>${activeMQ-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-kahadb-store</artifactId>
             <version>${activeMQ-version}</version>
         </dependency>
 
@@ -123,35 +113,11 @@
 
         <dependency>
             <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-spring</artifactId>
-            <version>${activeMQ-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-pool</artifactId>
             <version>${activeMQ-version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-jms</artifactId>
-            <version>${camel-version}</version>
-        </dependency>
-
-        <!-- logging -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j-version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j-version}</version>
-            <scope>runtime</scope>
-        </dependency>
+        <!-- Logging -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
@@ -171,7 +137,7 @@
             <scope>runtime</scope>
         </dependency>
 
-         <!-- Testing gubbins -->
+         <!-- Testing  -->
 
         <!-- Since we're using Camel 2.10.0+, lets try the new test lib-->
         <dependency>
@@ -188,6 +154,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Jetty libs for testing and embedded mode -->
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jetty</artifactId>
@@ -199,6 +166,28 @@
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http-jetty</artifactId>
             <version>${cxf-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ActiveMQ broker -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-broker</artifactId>
+            <version>${activeMQ-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-spring</artifactId>
+            <version>${activeMQ-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-kahadb-store</artifactId>
+            <version>${activeMQ-version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -230,7 +219,7 @@
                 </executions>
             </plugin>
 
-            <!-- Java2wsdl plugin - used to generate dummy webservice -->
+            <!-- Java2wsdl plugin - used in dev to generate ContactUpdate webservice -->
             <!--<plugin>-->
             <!--<groupId>org.apache.cxf</groupId>-->
             <!--<artifactId>cxf-java2ws-plugin</artifactId>-->

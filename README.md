@@ -1,17 +1,7 @@
 # camel-xslt-poc
 A proof of concept using cxf webservices, ActiveMQ, camel routing and xslt with minimal lines of code
 - Now Tomcat compliant
-- Externally configurable in '/AB2/Configuration/override.properties'
-
-CXF web services
-
-    ContactUpdate - CXF generated (Java2WSDL) webservice with a single operation that takes a publicID, firstname and lastname String parameter
-
-
-JMS
-
-    Simple request / response queue using CSF, ActiveMQ and a CBR EIP
-
+- Externally configurable in '/AB2/configuration/override.properties'
 
 Routing
 
@@ -37,7 +27,7 @@ Logging
     SLF4j with console and rollingfile appenders
         Configured in 'src/main/resources/log4j2.xml'
   
-    Set the 'Root' level attribute to debug if you want to see detailed runtime info
+    Set the 'Root' attribute to debug if you want to see detailed runtime info
 
 
 Running the code 
@@ -54,8 +44,11 @@ Running the code
       will resolve dependencies, compile, and run tests
       
     mvn jetty:run
-      will launch the app 
-      
+      will launch the app in embedded jetty mode
+
+    mvn tomcat7:deploy
+      will deploy into a Tomcat 7/8/8.5 container if you give it credentials to a manager-text role
+      (alternatively run clean-compile-package and manually deploy war)
       
  
 Next up :
@@ -74,5 +67,6 @@ Improvements :
     Better xslt using namespaces
     Extend Properties for logging folder etc
     XSD schema validation on GX transformed messages?
-
+    Container analysis - Karaf? Embedded jetty?
+    Concurrency tooling - Akka?
 
