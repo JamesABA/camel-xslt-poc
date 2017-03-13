@@ -5,32 +5,25 @@
                "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <!-- Main spring config -->
+    <!-- TEST spring config -->
+
     <bean id="configprops" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:configuration/default.properties</value>
-                <value>file:/AB2/Configuration/override.properties</value>
+                <value>classpath:configuration/test.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound">
-            <value>true</value>
+            <value>false</value>
         </property>
     </bean>
 
     <bean id="logger" class="org.slf4j.LoggerFactory" factory-method="getLogger"
           xmlns="http://www.springframework.org/schema/beans">
-        <constructor-arg value="com.businessagility.poc.camelpoc"/>
+        <constructor-arg value="com.businessagility.poc.camelpoc.TEST"/>
     </bean>
 
-    <import resource="classpath:META-INF/cxf/cxf.xml"/>
-    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
-
-    <!--<import resource="classpath:spring/camelpoc-activemq.xml"/>-->
-
-    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-        <streamCaching id="myCacheConfig" bufferSize="16384" spoolDirectory="/tmp/cachedir" spoolThreshold="65536"/>
-    </camelContext>
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring"/>
 
     <!-- bean to dynamically load routes -->
     <bean id="extRouteLoader" class="com.businessagility.poc.routing.RouteLoader">

@@ -13,6 +13,8 @@ import java.nio.file.*;
  *
  * Iterates around a specified folder and updates the camel context with any routes found.
  *  Looks for files with an extension of .xml or .route
+ *
+ *  Update - if the path points to a file, just load that file (handy for testing)
  */
 public class RouteLoader {
 
@@ -27,17 +29,24 @@ public class RouteLoader {
     }
 
     public void loadRoutes(String routeFolder) {
-        Path p = Paths.get(routeFolder);
+        Path routePath = Paths.get(routeFolder);
 
-        if (!Files.exists(p) || !Files.isDirectory(p)) {
+        if (!Files.exists(routePath)) {
             logger.error("Failed to read from route configuration location <"
-                    + routeFolder +">. It either isn't a directory, or it doesn't exist.");
+                    + routeFolder +"> at "+routePath.toAbsolutePath()+" It doesn't seem to exist.");
             return;
         }
 
+        if (!Files.isDirectory(routePath)) {
+            addRoute(routePath);
+            return;
+        }
+
+        /* TODO: Agree error handling strategy. Currently, if a route file fails, we just continue on with all other files
+            this might not fit a fail fast error handling strategy.. */
         try {
             DirectoryStream<Path> stream =
-                    Files.newDirectoryStream(p, "*.{xml,route}");
+                    Files.newDirectoryStream(routePath, "*.{xml,route}");
 
             for (Path file : stream) {
                 addRoute(file);
@@ -58,7 +67,7 @@ public class RouteLoader {
             RoutesDefinition routes = context.loadRoutesDefinition(stream);
             context.addRouteDefinitions(routes.getRoutes());
 
-        } catch (Exception e) /*Sorry.. Camel throws a base type */ {
+        } catch (Exception e) /*Sorry.. Camel throws a base type in 'loadRoutesDefinition' */ {
             logger.warn("Failed to load route from file <" + file +
                     "> with exception " + e.getMessage());
         }

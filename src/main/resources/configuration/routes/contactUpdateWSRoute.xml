@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <routes xmlns="http://camel.apache.org/schema/spring">
-<!-- This route should be dynamically loaded via a static route at runtime -->
       <route id="contactUpdateWSRoute">
             <from uri="cxf:/ContactUpdate?serviceClass=com.businessagility.poc.webservices.ContactUpdatePortType&amp;dataFormat=PAYLOAD"/>
+            <!--<from uri="cxf:/http://localhost:9090/ws/ContactUpdate?serviceClass=com.businessagility.poc.webservices.ContactUpdatePortType&amp;dataFormat=PAYLOAD"/>-->
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
             <to uri="xslt:xslt/mapContactName.xslt"/>
             <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
