@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <routes xmlns="http://camel.apache.org/schema/spring" xmlns:pn="http://guidewire.com/cc/gx/PersonModel.gx">
     <!-- Test route -->
+    <!-- This is a really messy example of an XPATH expression.
+    Issues have been :
+    functions like 'starts-with()' dont seem to work (with saxon included) so we're adding a header using xpath, then using the 'simple'
+    language to evaluate the content.
+    When using externally loaded routes '<routes>' and xpath, it seems impossible to set namespace prefixes without writing a custom bean
+    (Works fine with static routes using '<RouteContext xmlns:eg="blah.xsd">')
+    so we're having to use the 'local-name()' method to retrieve the element content which is both messy and expensive.
+
+    The important thing is that this IS possible, if not very graceful yet.
+
+    https://issues.apache.org/jira/browse/CAMEL-5231
+
+    Update : Camel version 2.19.0 may fix this...(you can add namespace prefixes in the '<routes>' element)
+     but its not yet very stable or available.
+    -->
+
     <route id="contactUpdateJMS">
         <from uri="activemq:queue:camelpoc.requestQ"/>
-        <setProperty propertyName="namespace">
-            <simple>xmlns:pn="http://guidewire.com/cc/gx/PersonModel.gx"</simple>
-        </setProperty>
         <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-        <to uri="xslt:xslt/mapJMSRequest.xslt"/>
+        <to uri="xslt:configuration/xslt/mapJMSRequest.xslt"/>
         <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
         <to uri="file://target/outputJMS?fileName=camelpocJMS-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
         <setHeader headerName="publicID">
-            <xpath logNamespaces="true" resultType="java.lang.String">//PublicID</xpath>
+            <xpath logNamespaces="true" resultType="java.lang.String">/*[local-name() = 'Person']/*[local-name() = 'PublicID']</xpath>
         </setHeader>
         <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
         <choice>
@@ -27,7 +40,7 @@
                 <to uri="activemq:queue:camelpoc.deadletterQ"/>
             </otherwise>
         </choice>
-        <to uri="velocity:vm/camelpocJMSResponse.vm"/>
+        <to uri="velocity:configuration/vm/camelpocJMSResponse.vm"/>
         <to uri="activemq:queue:camelpoc.responseQ"/>
     </route>
 

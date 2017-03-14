@@ -4,9 +4,9 @@
     <route id="testRoute">
         <from uri="direct:start"/>
         <to uri="log:com.businessagility.poc.camelpoc.TEST?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-        <to uri="xslt:xslt/mapContactName.xslt"/>
+        <to uri="xslt:configuration/xslt/mapContactName.xslt"/>
         <to uri="file://target/outputCU?fileName=test-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
-        <to uri="velocity:vm/contactUpdateResponse.vm"/>
+        <to uri="velocity:configuration/vm/contactUpdateResponse.vm"/>
     </route>
 
 </routes>

@@ -5,5 +5,5 @@
 target/**
 logs/**
 .idea/**
-
 camelxsltpoc.iml
+activemq-data/**

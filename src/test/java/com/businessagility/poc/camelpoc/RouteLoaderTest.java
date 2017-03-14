@@ -5,7 +5,6 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.spring.SpringCamelContext;
 import org.apache.camel.test.spring.*;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +18,7 @@ import static org.junit.Assert.assertNotNull;
  * Created by JamesAyling on 13/03/2017
  *
  * Test the route loader, and the routes it loads.
- * Expecting the following test route to load
  *
- * <routes xmlns="http://camel.apache.org/schema/spring">
- <route id="testRoute">
- <from uri="direct:start"/>
- <to uri="mock:log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
- <to uri="mock:xslt:xslt/mapContactName.xslt"/>
- <to uri="mock:file://target/outputCU?fileName=test-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
- <to uri="mock:velocity:vm/contactUpdateResponse.vm"/>
- <to uri="direct:end"/>
- </route>
-
- </routes>
  */
 
 @RunWith(CamelSpringRunner.class)
@@ -49,13 +36,13 @@ public class RouteLoaderTest {
     @Produce(uri = "direct:start")
     ProducerTemplate producer;
 
-    @EndpointInject(uri = "mock:velocity:vm/contactUpdateResponse.vm")
+    @EndpointInject(uri = "mock:velocity:configuration/vm/contactUpdateResponse.vm")
     MockEndpoint velocityComponent;
 
     @EndpointInject(uri = "mock:log:com.businessagility.poc.camelpoc.TEST")
     MockEndpoint logComponent;
 
-    @EndpointInject(uri = "mock:xslt:xslt/mapContactName.xslt")
+    @EndpointInject(uri = "mock:xslt:configuration/xslt/mapContactName.xslt")
     MockEndpoint transformComponent;
 
     @EndpointInject(uri="mock:file://target/outputCU")
@@ -80,9 +67,9 @@ public class RouteLoaderTest {
     @Test
     public void testMockEndpointsAvailable() throws InterruptedException {
 
-        assertNotNull(context.hasEndpoint("mock:velocity:vm/contactUpdateResponse.vm"));
+        assertNotNull(context.hasEndpoint("mock:velocity:configuration/vm/contactUpdateResponse.vm"));
         assertNotNull(context.hasEndpoint("mock:log:com.businessagility.poc.camelpoc.TEST"));
-        assertNotNull(context.hasEndpoint("mock:xslt:xslt/mapContactName.xslt"));
+        assertNotNull(context.hasEndpoint("mock:xslt:configuration/xslt/mapContactName.xslt"));
         assertNotNull(context.hasEndpoint("mock:file://target/outputCU"));
 
     }

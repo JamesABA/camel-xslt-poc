@@ -1,17 +1,17 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
     <xsl:template match="/">
-        <Person xmlns="http://guidewire.com/cc/gx/PersonModel.gx">
-            <FirstName>
+        <pn:Person xmlns:pn="http://guidewire.com/cc/gx/PersonModel.gx">
+            <pn:FirstName>
                 <xsl:value-of select="//*[contains(local-name(),'irstName')]"/>
-            </FirstName>
-            <LastName>
+            </pn:FirstName>
+            <pn:LastName>
                 <xsl:value-of select="//*[substring(name(), string-length(name()) - 6) = 'astName']"/>
-            </LastName>
-            <PublicID>
+            </pn:LastName>
+            <pn:PublicID>
                 <xsl:value-of select="//*[substring(name(), string-length(name()) - 6) = 'ublicID']"/>
-            </PublicID>
-        </Person>
+            </pn:PublicID>
+        </pn:Person>
     </xsl:template>
 
 </xsl:stylesheet>

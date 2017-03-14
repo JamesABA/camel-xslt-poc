@@ -42,7 +42,7 @@ public class JMSRouteTest {
     @EndpointInject(uri = "mock:activemq:queue:camelpoc.requestQ")
     MockEndpoint requestQ;
 
-    @EndpointInject(uri = "mock:velocity:vm/camelpocJMSResponse.vm")
+    @EndpointInject(uri = "mock:velocity:configuration/vm/camelpocJMSResponse.vm")
     MockEndpoint velocityComponent;
 
     @EndpointInject(uri = "mock:log:com.businessagility.poc.camelpoc")
@@ -61,7 +61,7 @@ public class JMSRouteTest {
     public void testMockEndpointsAvailable() throws InterruptedException {
 
         assertNotNull(context.hasEndpoint("mock:log:com.businessagility.poc.camelpoc"));
-        assertNotNull(context.hasEndpoint("mock:velocity:vm/camelpocJMSResponse.vm"));
+        assertNotNull(context.hasEndpoint("mock:velocity:configuration/vm/camelpocJMSResponse.vm"));
         assertNotNull(context.hasEndpoint("mock:activemq:queue:camelpoc.requestQ"));
         assertNotNull(context.hasEndpoint("mock:activemq:queue:camelpoc.responseQ"));
     }

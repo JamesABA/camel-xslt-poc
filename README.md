@@ -1,18 +1,21 @@
 # camel-xslt-poc
-A proof of concept using cxf webservices, ActiveMQ, camel routing and xslt with minimal lines of code
+A proof of concept using cxf web services, ActiveMQ, camel routing and xslt with minimal lines of code
+
+Updates :
 - Now Tomcat compliant
 - Externally configurable in '/AB2/configuration/override.properties'
+- Example external config held in the project folder - AB2.zip
 
 Routing
 
-    Route1:
+    Route1 - deployed by default
     CXF consumer
     XSLT transformer to map webservice body to a simple structure (GX)
     File component to save transformed XML output
     Velocity template to generate webservice response
     Logging component used between each route step (DEBUG level)
 
-    Route2:
+    Route2 - used in test mode only (avoid AMQ broker dependency)
     JMS inbound queue
     XSLT transformer to map message body to a simple structure (GX)
     File component to save transformed XML output
@@ -52,21 +55,21 @@ Running the code
       
  
 Next up :
+    External wsdl generation / addition to system
+    Externalise (some) logging config options
 
-    Error handling
+
+Improvements / Analysis / Other features:
+
+    Error handling examples
 	RESTful service consumers
     Security options with camel for endpoints
     'Dozer' component for bean mapping option?
     Drools integration?
     Spring Namespace handlers / extensions of Camel Spring XML routing
     Industry standard services, routes, transformations for standard deployment pattern
-
-
-Improvements :
-
     Better xslt using namespaces
-    Extend Properties for logging folder etc
-    XSD schema validation on GX transformed messages?
-    Container analysis - Karaf? Embedded jetty?
-    Concurrency tooling - Akka?
+    XSD schema validation on GX transformed messages
+    Container analysis - Karaf? Embedded jetty of any production value at all?
+    Look at Akka
 
