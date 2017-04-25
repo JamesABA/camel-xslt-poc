@@ -1,4 +1,4 @@
-package com.businessagility.poc.routing;
+package com.businessagility.poc.loader;
 
 import org.apache.camel.model.RoutesDefinition;
 import org.apache.camel.spring.SpringCamelContext;
@@ -33,7 +33,7 @@ public class RouteLoader {
 
         if (!Files.exists(routePath)) {
             logger.error("Failed to read from route configuration location <"
-                    + routeFolder +"> at "+routePath.toAbsolutePath()+" It doesn't seem to exist.");
+                    + routeFolder +"> at ["+routePath.toAbsolutePath()+"]. It doesn't seem to exist.");
             return;
         }
 

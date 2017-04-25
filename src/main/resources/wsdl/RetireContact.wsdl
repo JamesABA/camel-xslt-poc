@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="RetireContact" targetNamespace="http://retirecontact.webservices.poc.businessagility.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://retirecontact.webservices.poc.businessagility.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:types>
+        <xsd:schema xmlns:tns="http://retirecontact.webservices.poc.businessagility.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://retirecontact.webservices.poc.businessagility.com/">
+            <xsd:element name="retireContact" type="tns:retireContact"/>
+            <xsd:complexType name="retireContact">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="_firstName" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="_lastName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="retireContactResponse" type="tns:retireContactResponse"/>
+            <xsd:complexType name="retireContactResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="return" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="retireContact">
+        <wsdl:part name="parameters" element="tns:retireContact">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="retireContactResponse">
+        <wsdl:part name="parameters" element="tns:retireContactResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="RetireContactPortType">
+        <wsdl:operation name="retireContact">
+            <wsdl:input name="retireContact" message="tns:retireContact">
+            </wsdl:input>
+            <wsdl:output name="retireContactResponse" message="tns:retireContactResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="RetireContactSoapBinding" type="tns:RetireContactPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="retireContact">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="retireContact">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="retireContactResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="RetireContact">
+        <wsdl:port name="RetireContactPort" binding="tns:RetireContactSoapBinding">
+            <soap:address location="http://localhost:8080/camel-xslt-poc/ws/RetireContact"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

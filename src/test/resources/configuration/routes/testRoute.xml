@@ -4,9 +4,29 @@
     <route id="testRoute">
         <from uri="direct:start"/>
         <to uri="log:com.businessagility.poc.camelpoc.TEST?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-        <to uri="xslt:configuration/xslt/mapContactName.xslt"/>
+        <to uri="xslt:configuration/xslt/mapPerson.xslt"/>
+        <to uri="direct:validatePerson"/>
         <to uri="file://target/outputCU?fileName=test-$simple{date:now:yyyyMMdd-HHmmss}.xml"/>
-        <to uri="velocity:configuration/vm/contactUpdateResponse.vm"/>
+        <to uri="velocity:configuration/vm/routeTestResponse.vm"/>
+    </route>
+
+    <route id="validatePerson">
+        <from uri="direct:validatePerson"/>
+        <doTry>
+            <to uri="validator:configuration/xsd/PersonModel.xsd"/>
+            <doCatch>
+                <exception>org.apache.camel.ValidationException</exception>
+                <to uri="direct:invalidTransform"/>
+                <stop/>
+            </doCatch>
+         </doTry>
+    </route>
+
+
+    <route id="invalidTransform">
+        <from uri="direct:invalidTransform"/>
+        <log loggingLevel="INFO" message="ERROR: Transform produced results that do not conform to schema."/>
+        <!-- craft a response / SOAPFault -->
     </route>
 
 </routes>

@@ -24,10 +24,10 @@
 
     <import resource="classpath:spring/testactivemq.xml"/>
 
-    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring" xmlns:pn="http://guidewire.com/cc/gx/PersonModel.gx"/>
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring"/>
 
     <!-- bean to dynamically load routes -->
-    <bean id="extRouteLoader" class="com.businessagility.poc.routing.RouteLoader">
+    <bean id="extRouteLoader" class="com.businessagility.poc.loader.RouteLoader">
         <constructor-arg value ="${route.configuration.folder}"/>
         <constructor-arg ref="camel" />
         <constructor-arg ref="logger"/>

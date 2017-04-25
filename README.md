@@ -2,27 +2,11 @@
 A proof of concept using cxf web services, ActiveMQ, camel routing and xslt with minimal lines of code
 
 Updates :
-- Now Tomcat compliant
-- Externally configurable in '/AB2/configuration/override.properties'
+- Includes a JSON datamapper and sample types to send multiple 
+    service instructions to a remote host.
+- Tomcat compliant
+- Externally configurable by creating '/AB2/configuration/override.properties'
 - Example external config held in the project folder - AB2.zip
-
-Routing
-
-    Route1 - deployed by default
-    CXF consumer
-    XSLT transformer to map webservice body to a simple structure (GX)
-    File component to save transformed XML output
-    Velocity template to generate webservice response
-    Logging component used between each route step (DEBUG level)
-
-    Route2 - used in test mode only (avoid AMQ broker dependency)
-    JMS inbound queue
-    XSLT transformer to map message body to a simple structure (GX)
-    File component to save transformed XML output
-    Logging component used between each route step (DEBUG level)
-    CBR filter to pass on JMS to queue based on XML element content
-    JMS response queue
-
 
 
 Logging
@@ -35,7 +19,7 @@ Logging
 
 Running the code 
 
-  Standard Maven goals with embedded jetty server
+  Standard Maven goals with a couple of extra plugins
   
     mvn compile
       will compile the code
@@ -54,13 +38,15 @@ Running the code
       (alternatively run clean-compile-package and manually deploy war)
       
  
-Next up :
+Next up
+
     External wsdl generation / addition to system
     Externalise (some) logging config options
 
 
 Improvements / Analysis / Other features:
 
+	JPA / Database route
     Error handling examples
 	RESTful service consumers
     Security options with camel for endpoints
@@ -69,7 +55,6 @@ Improvements / Analysis / Other features:
     Spring Namespace handlers / extensions of Camel Spring XML routing
     Industry standard services, routes, transformations for standard deployment pattern
     Better xslt using namespaces
-    XSD schema validation on GX transformed messages
     Container analysis - Karaf? Embedded jetty of any production value at all?
-    Look at Akka
+    Akka
 

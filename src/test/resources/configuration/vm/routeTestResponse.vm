@@ -1,0 +1,3 @@
+      <web:updateContactResponse xmlns:web="http://contactupdate.webservices.poc.businessagility.com/">
+         <web:return>OK</web:return>
+      </web:updateContactResponse>

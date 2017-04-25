@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route id="retireContactRoute">
+        <from uri="cxf:/RetireContact?serviceClass=com.businessagility.poc.webservices.retirecontact.RetireContactPortType&amp;dataFormat=PAYLOAD"/>
+        <to uri="xslt:configuration/xslt/mapContact.xslt"/>
+        <doTry>
+            <to uri="validator:configuration/xsd/ContactModel.xsd"/>
+            <doCatch>
+                <exception>org.apache.camel.ValidationException</exception>
+                <!-- TODO: Handle validation exception nicely -->
+                <stop/>
+            </doCatch>
+        </doTry>
+        <setHeader headerName="ABServiceName">
+            <constant>retireContact</constant>
+        </setHeader>
+        <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+        <to uri="direct:marshallAndSendToAB"/>
+        <to uri="velocity:configuration/vm/retireContactResponse.vm"/>
+    </route>
+</routes>

@@ -1,0 +1,8 @@
+      <web:createContactResponse xmlns:web="http://createcontact.webservices.poc.businessagility.com/">
+         #if(! ${headers.ABErrors} )
+         <web:return>OK</web:return>
+         #else
+         <web:return>ERROR</web:return>
+         <web:return>${headers.ABErrors}</web:return>
+         #end
+      </web:createContactResponse>

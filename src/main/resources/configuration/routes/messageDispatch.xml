@@ -1,0 +1,29 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+
+    <!--
+    Common route to send an ABRequest to AB tier
+        - Retrieve service list and populate ABRequest obj
+        - Marshall to JSON
+        - Send HTTP with content type header set to json
+        - Unmarshall back to ABRequest object
+    -->
+    <route id="sendToABTier">
+        <from uri="direct:marshallAndSendToAB"/>
+        <bean ref="messageBuilder" method="process"/>
+        <marshal ref="abrequestjson"/>
+        <setHeader headerName="CamelHttpMethod">
+            <constant>POST</constant>
+        </setHeader>
+        <setHeader headerName="Content-Type">
+            <constant>application/json</constant>
+        </setHeader>
+        <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+
+        <!-- TODO:Abstract target uri to config / props? -->
+        <to uri="http://localhost:8080/cc/service/AB2Controller?bridgeEndpoint=true"/>
+        <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+        <unmarshal ref="abresponsejson"/>
+        <bean ref="messageUnpacker" method="process"/>
+    </route>
+
+</routes>

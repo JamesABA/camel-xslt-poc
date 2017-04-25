@@ -11,6 +11,9 @@
             <pn:PublicID>
                 <xsl:value-of select="//*[substring(name(), string-length(name()) - 6) = 'ublicID']"/>
             </pn:PublicID>
+            <pn:WorkPhone>
+                <xsl:value-of select="//*[substring(name(), string-length(name()) - 6) = 'honeNumber']"/>
+            </pn:WorkPhone>
         </pn:Person>
     </xsl:template>
 

@@ -137,7 +137,24 @@
             <scope>runtime</scope>
         </dependency>
 
-         <!-- Testing  -->
+        <!-- Camel http component -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-http</artifactId>
+            <version>${camel-version}</version>
+            <!-- use the same version as your Camel core version -->
+        </dependency>
+
+        <!-- Camel Json lib (GSON) -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-gson</artifactId>
+            <version>${camel-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+
+        <!-- Testing  -->
 
         <!-- Since we're using Camel 2.10.0+, lets try the new test lib-->
         <dependency>
@@ -206,11 +223,10 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
-                            <wsdlOptions>
-                                <wsdlOption>
-                                    <wsdl>${basedir}/src/main/resources/wsdl/ContactUpdate.wsdl</wsdl>
-                                </wsdlOption>
-                            </wsdlOptions>
+							<wsdlRoot>${basedir}/src/main/resources/wsdl</wsdlRoot>
+                            <includes>
+                                <include>*.wsdl</include>
+                            </includes>
                         </configuration>
                         <goals>
                             <goal>wsdl2java</goal>

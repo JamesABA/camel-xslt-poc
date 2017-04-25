@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route id="createPersonRoute">
+        <from uri="cxf:/CreateContact?serviceClass=com.businessagility.poc.webservices.createcontact.CreateContactPortType&amp;dataFormat=PAYLOAD"/>
+        <to uri="xslt:configuration/xslt/mapPerson.xslt"/>
+        <doTry>
+            <to uri="validator:configuration/xsd/PersonModel.xsd"/>
+            <doCatch>
+                <exception>org.apache.camel.ValidationException</exception>
+                <!-- TODO: Handle validation exception nicely -->
+                <stop/>
+            </doCatch>
+        </doTry>
+        <setHeader headerName="ABServiceName">
+            <constant>createPerson</constant>
+        </setHeader>
+        <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
+        <to uri="direct:marshallAndSendToAB"/>
+        <to uri="velocity:configuration/vm/createPersonResponse.vm"/>
+    </route>
+
+</routes>

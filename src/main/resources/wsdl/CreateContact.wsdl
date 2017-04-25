@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CreateContact" targetNamespace="http://createcontact.webservices.poc.businessagility.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://createcontact.webservices.poc.businessagility.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xsd:schema xmlns:tns="http://createcontact.webservices.poc.businessagility.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://createcontact.webservices.poc.businessagility.com/">
+  <xsd:element name="createContact" type="tns:createContact"/>
+  <xsd:complexType name="createContact">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="_publicID" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="_firstName" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="_lastName" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="_phoneNumber" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="createContactResponse" type="tns:createContactResponse"/>
+  <xsd:complexType name="createContactResponse">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="return" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="createContact">
+    <wsdl:part name="parameters" element="tns:createContact">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createContactResponse">
+    <wsdl:part name="parameters" element="tns:createContactResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CreateContactPortType">
+    <wsdl:operation name="createContact">
+      <wsdl:input name="createContact" message="tns:createContact">
+    </wsdl:input>
+      <wsdl:output name="createContactResponse" message="tns:createContactResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CreateContactSoapBinding" type="tns:CreateContactPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="createContact">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createContact">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createContactResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CreateContact">
+    <wsdl:port name="CreateContactPort" binding="tns:CreateContactSoapBinding">
+      <soap:address location="http://localhost:8080/camel-xslt-poc/ws/CreateContact"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

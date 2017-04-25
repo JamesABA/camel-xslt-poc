@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="UpdateContactPhoneNumber" targetNamespace="http://updatecontactphonenumber.webservices.poc.businessagility.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://updatecontactphonenumber.webservices.poc.businessagility.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:types>
+        <xsd:schema xmlns:tns="http://updatecontactphonenumber.webservices.poc.businessagility.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://updatecontactphonenumber.webservices.poc.businessagility.com/">
+            <xsd:element name="updateContactPhoneNumber" type="tns:updateContactPhoneNumber"/>
+            <xsd:complexType name="updateContactPhoneNumber">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="_publicID" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="_firstName" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="_lastName" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="_phoneNumber" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="updateContactPhoneNumberResponse" type="tns:updateContactPhoneNumberResponse"/>
+            <xsd:complexType name="updateContactPhoneNumberResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="return" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="updateContactPhoneNumber">
+        <wsdl:part name="parameters" element="tns:updateContactPhoneNumber">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateContactPhoneNumberResponse">
+        <wsdl:part name="parameters" element="tns:updateContactPhoneNumberResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="UpdateContactPhoneNumberPortType">
+        <wsdl:operation name="updateContactPhoneNumber">
+            <wsdl:input name="updateContactPhoneNumber" message="tns:updateContactPhoneNumber">
+            </wsdl:input>
+            <wsdl:output name="updateContactPhoneNumberResponse" message="tns:updateContactPhoneNumberResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="UpdateContactPhoneNumberSoapBinding" type="tns:UpdateContactPhoneNumberPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="updateContactPhoneNumber">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="updateContactPhoneNumber">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateContactPhoneNumberResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="UpdateContactPhoneNumber">
+        <wsdl:port name="UpdateContactPhoneNumberPort" binding="tns:UpdateContactPhoneNumberSoapBinding">
+            <soap:address location="http://localhost:8080/camel-xslt-poc/ws/UpdateContactPhoneNumber"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
