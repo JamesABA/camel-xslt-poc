@@ -1,8 +1,8 @@
       <web:updateContactPhoneNumberResponse xmlns:web="http://updatecontactphonenumber.webservices.poc.businessagility.com/">
-         #if(! ${headers.ABErrors} )
+#if(! ${headers.ABErrors} )
          <web:return>OK</web:return>
-         #else
+#else
          <web:return>ERROR</web:return>
          <web:return>${headers.ABErrors}</web:return>
-         #end
+#end
       </web:updateContactPhoneNumberResponse>

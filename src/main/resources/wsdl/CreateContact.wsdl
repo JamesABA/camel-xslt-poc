@@ -5,7 +5,6 @@
   <xsd:element name="createContact" type="tns:createContact"/>
   <xsd:complexType name="createContact">
     <xsd:sequence>
-      <xsd:element minOccurs="0" name="_publicID" type="xsd:string"/>
       <xsd:element minOccurs="0" name="_firstName" type="xsd:string"/>
       <xsd:element minOccurs="0" name="_lastName" type="xsd:string"/>
       <xsd:element minOccurs="0" name="_phoneNumber" type="xsd:string"/>

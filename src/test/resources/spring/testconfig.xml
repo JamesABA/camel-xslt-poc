@@ -30,7 +30,6 @@
     <bean id="extRouteLoader" class="com.businessagility.poc.loader.RouteLoader">
         <constructor-arg value ="${route.configuration.folder}"/>
         <constructor-arg ref="camel" />
-        <constructor-arg ref="logger"/>
     </bean>
 
 </beans>

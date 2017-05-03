@@ -1,9 +1,12 @@
 package com.businessagility.poc.types;
 
 /**
- * Created by JamesAyling on 24/04/2017.
+ * ABResponse.java
+ *
+ * POJO to describe JSON message content for inbound messages
  */
 public class ABResponse {
+
     private String _errors;
     private String _body;
 

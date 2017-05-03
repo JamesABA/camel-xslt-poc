@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:gw="http://guidewire.com/xsd"
+        xmlns="http://guidewire.com/cc/gx/com.businessagility.agilebridge.gx.contactmodel"
+        targetNamespace="http://guidewire.com/cc/gx/com.businessagility.agilebridge.gx.contactmodel"
+        elementFormDefault="qualified">
+    <xsd:element
+            name="Contact" type="Contact" nillable="true"/>
+    <xsd:complexType
+            name="Contact">
+        <xsd:sequence>
+            <xsd:element name="entity-Person" minOccurs="0" nillable="true">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="FirstName" minOccurs="0" nillable="true" type="xsd:string" gw:type="java.lang.String"/>
+                        <xsd:element name="LastName" minOccurs="0" nillable="true" type="xsd:string" gw:type="java.lang.String"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="PublicID" minOccurs="0" nillable="true" type="xsd:string" gw:type="java.lang.String"/>
+            <xsd:element name="WorkPhone" minOccurs="0" nillable="true" type="xsd:string" gw:type="java.lang.String"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,9 @@
+      <fin:findContactResponse xmlns:fin="http://findcontact.webservices.poc.businessagility.com/">
+#if(! ${headers.ABErrors} )
+         ${body}
+         <fin:return>OK</fin:return>
+#else
+         <fin:return>ERROR</fin:return>
+         <fin:return>${headers.ABErrors}</fin:return>
+#end
+      </fin:findContactResponse>

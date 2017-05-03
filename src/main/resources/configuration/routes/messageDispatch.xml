@@ -4,13 +4,14 @@
     Common route to send an ABRequest to AB tier
         - Retrieve service list and populate ABRequest obj
         - Marshall to JSON
-        - Send HTTP with content type header set to json
-        - Unmarshall back to ABRequest object
+        - POST to HTTP endpoint
+        - Unmarshall back to JSON
+        - handle ABResponse
     -->
-    <route id="sendToABTier">
+    <route id="messageDispatchAB">
         <from uri="direct:marshallAndSendToAB"/>
-        <bean ref="messageBuilder" method="process"/>
-        <marshal ref="abrequestjson"/>
+        <bean ref="messageBuilder" method="configureRequest"/>
+        <marshal ref="abRequestJSON"/>
         <setHeader headerName="CamelHttpMethod">
             <constant>POST</constant>
         </setHeader>
@@ -18,12 +19,11 @@
             <constant>application/json</constant>
         </setHeader>
         <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-
         <!-- TODO:Abstract target uri to config / props? -->
         <to uri="http://localhost:8080/cc/service/AB2Controller?bridgeEndpoint=true"/>
         <to uri="log:com.businessagility.poc.camelpoc?showAll=true&amp;multiline=true&amp;level=DEBUG"/>
-        <unmarshal ref="abresponsejson"/>
-        <bean ref="messageUnpacker" method="process"/>
+        <unmarshal ref="abResponseJSON"/>
+        <bean ref="messageBuilder" method="configureResponse"/>
     </route>
 
 </routes>

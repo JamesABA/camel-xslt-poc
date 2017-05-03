@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="d8f0c007-ffd8-4b20-b4e1-78e34ab29bee" activeEnvironment="Default" name="CamelPoc" resourceRoot="" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.actions.iface.tools.soapui.LoadTestRunnerAction@values-local"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="Environment" value="Default"/>
+  <con:entry key="Global Properties" value=""/>
+  <con:entry key="TestSuite" value="&lt;all>"/>
+  <con:entry key="Report to Generate" value=""/>
+  <con:entry key="Password" value=""/>
+  <con:entry key="TestRunner Path" value="C:\Program Files\SmartBear\SoapUI-5.3.0/bin"/>
+  <con:entry key="Tool Args" value=""/>
+  <con:entry key="LoadTest" value="&lt;all>"/>
+  <con:entry key="Host:Port" value=""/>
+  <con:entry key="user-settings.xml Password" value=""/>
+  <con:entry key="WSS Password Type" value=""/>
+  <con:entry key="Save Project" value="false"/>
+  <con:entry key="System Properties" value=""/>
+  <con:entry key="Domain" value=""/>
+  <con:entry key="Open Report" value="false"/>
+  <con:entry key="Project Properties" value=""/>
+  <con:entry key="Print Report Statistics" value="false"/>
+  <con:entry key="Project Password" value=""/>
+  <con:entry key="Report Format(s)" value=""/>
+  <con:entry key="TestCase" value="&lt;all>"/>
+  <con:entry key="Username" value=""/>
+  <con:entry key="Root Folder" value=""/>
+  <con:entry key="Add Settings" value="false"/>
+  <con:entry key="Save After" value="false"/>
+  <con:entry key="Endpoint" value="http://localhost:8080/camel-xslt-poc/ws/ContactUpdate"/>
+  <con:entry key="ThreadCount" value="20"/>
+  <con:entry key="Limit" value="5000"/>
+</xml-fragment>]]></con:setting></con:settings><con:interface xsi:type="con:WsdlInterface" id="63b88454-a2bd-4e51-88a4-90ca2db2a068" wsaVersion="NONE" name="CreateContactSoapBinding" type="wsdl" bindingName="{http://createcontact.webservices.poc.businessagility.com/}CreateContactSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/CreateContact.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/CreateContact.wsdl"><con:part><con:url>file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/CreateContact.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="CreateContact" targetNamespace="http://createcontact.webservices.poc.businessagility.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://createcontact.webservices.poc.businessagility.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://createcontact.webservices.poc.businessagility.com/">
+      <xsd:element name="createContact" type="tns:createContact"/>
+      <xsd:complexType name="createContact">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="_firstName" type="xsd:string"/>
+          <xsd:element minOccurs="0" name="_lastName" type="xsd:string"/>
+          <xsd:element minOccurs="0" name="_phoneNumber" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="createContactResponse" type="tns:createContactResponse"/>
+      <xsd:complexType name="createContactResponse">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="return" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="createContact">
+    <wsdl:part name="parameters" element="tns:createContact"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createContactResponse">
+    <wsdl:part name="parameters" element="tns:createContactResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CreateContactPortType">
+    <wsdl:operation name="createContact">
+      <wsdl:input name="createContact" message="tns:createContact"></wsdl:input>
+      <wsdl:output name="createContactResponse" message="tns:createContactResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CreateContactSoapBinding" type="tns:CreateContactPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="createContact">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createContact">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createContactResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CreateContact">
+    <wsdl:port name="CreateContactPort" binding="tns:CreateContactSoapBinding">
+      <soap:address location="http://localhost:8080/camel-xslt-poc/ws/CreateContact"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://DESKTOP-6DNN89T:8088/mockContactUpdateSoapBinding</con:endpoint><con:endpoint>http://localhost:8080/camel-xslt-poc/ws/ContactUpdate</con:endpoint><con:endpoint>http://localhost:8080/camel-xslt-poc/ws/CreateContact</con:endpoint><con:endpoint>http://localhost:9090/ContactUpdatePort</con:endpoint></con:endpoints><con:operation id="8d773ecd-9b21-4e22-8574-ddd01d126ccb" isOneWay="false" action="" name="createContact" bindingOperationName="createContact" type="Request-Response" outputName="createContactResponse" inputName="createContact" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="62438336-1049-42de-894c-9bc46c23250d" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9090/ws/CreateContact</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cre="http://createcontact.webservices.poc.businessagility.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cre:createContact>
+         <!--Optional:-->
+         <cre:_firstName>Sammy</cre:_firstName>
+         <!--Optional:-->
+         <cre:_lastName>SoapyTest</cre:_lastName>
+         <!--Optional:-->
+         <cre:_phoneNumber/>
+      </cre:createContact>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://createcontact.webservices.poc.businessagility.com/CreateContactPortType/createContact"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="bd068dc6-1e99-49bb-abc0-3b6624b376ae" wsaVersion="NONE" name="RetireContactSoapBinding" type="wsdl" bindingName="{http://retirecontact.webservices.poc.businessagility.com/}RetireContactSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/RetireContact.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/RetireContact.wsdl"><con:part><con:url>file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/RetireContact.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="RetireContact" targetNamespace="http://retirecontact.webservices.poc.businessagility.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://retirecontact.webservices.poc.businessagility.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://retirecontact.webservices.poc.businessagility.com/">
+      <xsd:element name="retireContact" type="tns:retireContact"/>
+      <xsd:complexType name="retireContact">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="_firstName" type="xsd:string"/>
+          <xsd:element minOccurs="0" name="_lastName" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="retireContactResponse" type="tns:retireContactResponse"/>
+      <xsd:complexType name="retireContactResponse">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="return" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="retireContact">
+    <wsdl:part name="parameters" element="tns:retireContact"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="retireContactResponse">
+    <wsdl:part name="parameters" element="tns:retireContactResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="RetireContactPortType">
+    <wsdl:operation name="retireContact">
+      <wsdl:input name="retireContact" message="tns:retireContact"></wsdl:input>
+      <wsdl:output name="retireContactResponse" message="tns:retireContactResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RetireContactSoapBinding" type="tns:RetireContactPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="retireContact">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="retireContact">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="retireContactResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RetireContact">
+    <wsdl:port name="RetireContactPort" binding="tns:RetireContactSoapBinding">
+      <soap:address location="http://localhost:8080/camel-xslt-poc/ws/RetireContact"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/camel-xslt-poc/ws/RetireContact</con:endpoint></con:endpoints><con:operation id="8c09e122-d687-4810-b459-340ad87fb8b1" isOneWay="false" action="" name="retireContact" bindingOperationName="retireContact" type="Request-Response" outputName="retireContactResponse" inputName="retireContact" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="79bedcca-b470-4873-9258-1db736084e51" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9090/ws/RetireContact</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ret="http://retirecontact.webservices.poc.businessagility.com/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ret:retireContact>\r
+         <!--Optional:-->\r
+         <ret:_firstName>Sammy</ret:_firstName>\r
+         <!--Optional:-->\r
+         <ret:_lastName>SoapyTest</ret:_lastName>\r
+      </ret:retireContact>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://retirecontact.webservices.poc.businessagility.com/RetireContactPortType/retireContact"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="b0368c49-81d4-49d3-a577-37ec74729029" wsaVersion="NONE" name="UpdateContactPhoneNumberSoapBinding" type="wsdl" bindingName="{http://updatecontactphonenumber.webservices.poc.businessagility.com/}UpdateContactPhoneNumberSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/UpdateContactPhoneNumber.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/UpdateContactPhoneNumber.wsdl"><con:part><con:url>file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/UpdateContactPhoneNumber.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="UpdateContactPhoneNumber" targetNamespace="http://updatecontactphonenumber.webservices.poc.businessagility.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://updatecontactphonenumber.webservices.poc.businessagility.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://updatecontactphonenumber.webservices.poc.businessagility.com/">
+      <xsd:element name="updateContactPhoneNumber" type="tns:updateContactPhoneNumber"/>
+      <xsd:complexType name="updateContactPhoneNumber">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="_firstName" type="xsd:string"/>
+          <xsd:element minOccurs="0" name="_lastName" type="xsd:string"/>
+          <xsd:element minOccurs="0" name="_phoneNumber" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="updateContactPhoneNumberResponse" type="tns:updateContactPhoneNumberResponse"/>
+      <xsd:complexType name="updateContactPhoneNumberResponse">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="return" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="updateContactPhoneNumber">
+    <wsdl:part name="parameters" element="tns:updateContactPhoneNumber"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateContactPhoneNumberResponse">
+    <wsdl:part name="parameters" element="tns:updateContactPhoneNumberResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="UpdateContactPhoneNumberPortType">
+    <wsdl:operation name="updateContactPhoneNumber">
+      <wsdl:input name="updateContactPhoneNumber" message="tns:updateContactPhoneNumber"></wsdl:input>
+      <wsdl:output name="updateContactPhoneNumberResponse" message="tns:updateContactPhoneNumberResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="UpdateContactPhoneNumberSoapBinding" type="tns:UpdateContactPhoneNumberPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="updateContactPhoneNumber">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateContactPhoneNumber">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateContactPhoneNumberResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="UpdateContactPhoneNumber">
+    <wsdl:port name="UpdateContactPhoneNumberPort" binding="tns:UpdateContactPhoneNumberSoapBinding">
+      <soap:address location="http://localhost:8080/camel-xslt-poc/ws/UpdateContactPhoneNumber"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/camel-xslt-poc/ws/UpdateContactPhoneNumber</con:endpoint></con:endpoints><con:operation id="ac80f620-6ee3-4f69-a101-d1ae74848f5e" isOneWay="false" action="" name="updateContactPhoneNumber" bindingOperationName="updateContactPhoneNumber" type="Request-Response" outputName="updateContactPhoneNumberResponse" inputName="updateContactPhoneNumber" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3d48f6ee-2a2b-462e-9313-588bf573578d" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9090/ws/UpdateContactPhoneNumber</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:upd="http://updatecontactphonenumber.webservices.poc.businessagility.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <upd:updateContactPhoneNumber>
+         <!--Optional:-->
+         <upd:_firstName>Sammy</upd:_firstName>
+         <!--Optional:-->
+         <upd:_lastName>SoapyTest</upd:_lastName>
+         <!--Optional:-->
+         <upd:_phoneNumber>0898272727</upd:_phoneNumber>
+      </upd:updateContactPhoneNumber>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://updatecontactphonenumber.webservices.poc.businessagility.com/UpdateContactPhoneNumberPortType/updateContactPhoneNumber"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="cf4863cb-aef2-4acf-a011-4fff4655d915" wsaVersion="NONE" name="FindContactSoapBinding" type="wsdl" bindingName="{http://findcontact.webservices.poc.businessagility.com/}FindContactSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/FindContact.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/FindContact.wsdl"><con:part><con:url>file:/C:/Users/JamesAyling/Documents/camelxsltpoc/src/main/resources/wsdl/FindContact.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="FindContact" targetNamespace="http://findcontact.webservices.poc.businessagility.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://findcontact.webservices.poc.businessagility.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:cx="http://guidewire.com/cc/gx/com.businessagility.agilebridge.gx.contactmodel">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://findcontact.webservices.poc.businessagility.com/">
+      <xsd:import namespace="http://guidewire.com/cc/gx/com.businessagility.agilebridge.gx.contactmodel" schemaLocation="ContactModel.xsd"/>
+      <xsd:element name="findContact" type="tns:findContact"/>
+      <xsd:complexType name="findContact">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="_publicID" type="xsd:string"/>
+          <xsd:element minOccurs="0" name="_firstName" type="xsd:string"/>
+          <xsd:element minOccurs="0" name="_lastName" type="xsd:string"/>
+          <xsd:element minOccurs="0" name="_phoneNumber" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="findContactResponse" type="tns:findContactResponse"/>
+      <xsd:complexType name="findContactResponse">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="Return" type="xsd:string"/>
+          <xsd:element minOccurs="0" name="Contact" type="cx:Contact"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="findContact">
+    <wsdl:part name="parameters" element="tns:findContact"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findContactResponse">
+    <wsdl:part name="parameters" element="tns:findContactResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="FindContactPortType">
+    <wsdl:operation name="findContact">
+      <wsdl:input name="findContact" message="tns:findContact"></wsdl:input>
+      <wsdl:output name="findContactResponse" message="tns:findContactResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FindContactSoapBinding" type="tns:FindContactPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="findContact">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findContact">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findContactResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FindContact">
+    <wsdl:port name="FindContactPort" binding="tns:FindContactSoapBinding">
+      <soap:address location="http://localhost:8080/camel-xslt-poc/ws/FindContact"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:\C:\Users\JamesAyling\Documents\camelxsltpoc\src\main\resources\wsdl\ContactModel.xsd</con:url><con:content><![CDATA[<xsd:schema targetNamespace="http://guidewire.com/cc/gx/com.businessagility.agilebridge.gx.contactmodel" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gw="http://guidewire.com/xsd" xmlns="http://guidewire.com/cc/gx/com.businessagility.agilebridge.gx.contactmodel">
+  <xsd:element name="Contact" type="Contact" nillable="true"/>
+  <xsd:complexType name="Contact">
+    <xsd:sequence>
+      <xsd:element name="entity-Person" minOccurs="0" nillable="true">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="FirstName" minOccurs="0" nillable="true" type="xsd:string" gw:type="java.lang.String"/>
+            <xsd:element name="LastName" minOccurs="0" nillable="true" type="xsd:string" gw:type="java.lang.String"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="PublicID" minOccurs="0" nillable="true" type="xsd:string" gw:type="java.lang.String"/>
+      <xsd:element name="WorkPhone" minOccurs="0" nillable="true" type="xsd:string" gw:type="java.lang.String"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://DESKTOP-6DNN89T:8088/mockFindContactSoapBinding</con:endpoint><con:endpoint>http://localhost:8080/camel-xslt-poc/ws/FindContact</con:endpoint></con:endpoints><con:operation id="bb04d078-7162-4e10-a989-d0ad16ecfb40" isOneWay="false" action="" name="findContact" bindingOperationName="findContact" type="Request-Response" outputName="findContactResponse" inputName="findContact" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="9849d0dd-4452-4f6a-af11-a56529501e2e" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9090/ws/FindContact</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fin="http://findcontact.webservices.poc.businessagility.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <fin:findContact>
+        <fin:_firstName>Sammy</fin:_firstName>
+         <fin:_lastName>SoapyTest</fin:_lastName>
+      </fin:findContact>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://findcontact.webservices.poc.businessagility.com/FindContactPortType/findContact"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

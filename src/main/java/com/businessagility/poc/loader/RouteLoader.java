@@ -3,37 +3,41 @@ package com.businessagility.poc.loader;
 import org.apache.camel.model.RoutesDefinition;
 import org.apache.camel.spring.SpringCamelContext;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
 
 /**
- * Created by JamesAyling on 10/03/2017.
+ * RouteLoader.java
  *
- * Iterates around a specified folder and updates the camel context with any routes found.
+ * Spring activated singleton used for configuration
+ *
+ * Iterates around the specified folder and updates the camel context with any routes found.
  *  Looks for files with an extension of .xml or .route
  *
- *  Update - if the path points to a file, just load that file (handy for testing)
+ * Update - if the path points to a file, just load that file (handy for testing)
+ *
+ * Note - TODO: Might be worth making this recursive so we can traverse a tree, lots of routes on one level
+ *  would get messy..
  */
 public class RouteLoader {
 
     private SpringCamelContext context;
-    private Logger logger;
+    private Logger logger = LoggerFactory.getLogger(RouteLoader.class);
 
-    public RouteLoader(SpringCamelContext context, Logger logger, String routeFolder) {
+    public RouteLoader(SpringCamelContext context, String routeFolder) {
         this.context = context;
-        this.logger = logger;
-
         loadRoutes(routeFolder);
     }
 
-    public void loadRoutes(String routeFolder) {
+    private void loadRoutes(String routeFolder) {
         Path routePath = Paths.get(routeFolder);
 
         if (!Files.exists(routePath)) {
             logger.error("Failed to read from route configuration location <"
-                    + routeFolder +"> at ["+routePath.toAbsolutePath()+"]. It doesn't seem to exist.");
+                    + routeFolder + "> at [" + routePath.toAbsolutePath() + "]. It doesn't seem to exist.");
             return;
         }
 
@@ -42,8 +46,7 @@ public class RouteLoader {
             return;
         }
 
-        /* TODO: Agree error handling strategy. Currently, if a route file fails, we just continue on with all other files
-            this might not fit a fail fast error handling strategy.. */
+        // TODO: This should probably fail very loudly if things go wrong as routes are kinda important.
         try {
             DirectoryStream<Path> stream =
                     Files.newDirectoryStream(routePath, "*.{xml,route}");
@@ -51,15 +54,13 @@ public class RouteLoader {
             for (Path file : stream) {
                 addRoute(file);
             }
-        }
-        catch (IOException | DirectoryIteratorException x) {
+        } catch (IOException | DirectoryIteratorException x) {
             logger.error("Failed to read from route configuration location <"
                     + routeFolder + ">. Exception was " + x.getMessage());
         }
     }
 
     private void addRoute(Path file) {
-
         try {
             logger.debug("Attempting to load route from file " + file);
 

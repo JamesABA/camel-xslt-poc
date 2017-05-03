@@ -5,8 +5,9 @@
                "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <!-- Main spring config -->
-    <bean id="configprops" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+
+    <!-- Load root config -->
+    <bean id="rootConfig" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:configuration/default.properties</value>
@@ -18,22 +19,17 @@
         </property>
     </bean>
 
-    <bean id="logger" class="org.slf4j.LoggerFactory" factory-method="getLogger"
-          xmlns="http://www.springframework.org/schema/beans">
-        <constructor-arg value="com.businessagility.poc.camelpoc"/>
-    </bean>
-
+    <!-- Configure CXF -->
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
-    <!-- AMQ broker if required, currently only used in test -->
-    <!--<import resource="classpath:spring/camelpoc-activemq.xml"/>-->
-
+    <!-- Set up the Camel context -->
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
         <streamCaching id="myCacheConfig" bufferSize="16384" spoolDirectory="/tmp/cachedir" spoolThreshold="65536"/>
+        <!-- Define mappings for JSON marshall / unmarshall -->
         <dataFormats>
-            <json id="abrequestjson" library="Gson" unmarshalTypeName="com.businessagility.poc.types.ABRequest"/>
-            <json id="abresponsejson" library="Gson" unmarshalTypeName="com.businessagility.poc.types.ABResponse"/>
+            <json id="abRequestJSON" library="Gson" unmarshalTypeName="com.businessagility.poc.types.ABRequest"/>
+            <json id="abResponseJSON" library="Gson" unmarshalTypeName="com.businessagility.poc.types.ABResponse"/>
         </dataFormats>
     </camelContext>
 
@@ -41,13 +37,12 @@
     <bean id="extRouteLoader" class="com.businessagility.poc.loader.RouteLoader">
         <constructor-arg value ="${route.configuration.folder}"/>
         <constructor-arg ref="camel" />
-        <constructor-arg ref="logger"/>
     </bean>
 
-    <bean id="messageBuilder" class="com.businessagility.poc.component.ABMessageBuilder">
-        <property name="configFolder" value="${service.configuration.folder}"/>
+    <!-- bean to configure messages for ABTier -->
+    <bean id="messageBuilder" class="com.businessagility.poc.component.ABMessageConfig">
+        <constructor-arg value="${service.configuration.folder}"/>
     </bean>
-    <bean id="messageUnpacker" class="com.businessagility.poc.component.ABMessageUnpack"/>
 
 </beans>
 

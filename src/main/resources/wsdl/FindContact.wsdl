@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="FindContact" targetNamespace="http://findcontact.webservices.poc.businessagility.com/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://findcontact.webservices.poc.businessagility.com/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:cx="http://guidewire.com/cc/gx/com.businessagility.agilebridge.gx.contactmodel">
+
+
+    <wsdl:types>
+        <xsd:schema xmlns:tns="http://findcontact.webservices.poc.businessagility.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://findcontact.webservices.poc.businessagility.com/">
+            <xsd:import namespace="http://guidewire.com/cc/gx/com.businessagility.agilebridge.gx.contactmodel"
+                        schemaLocation="ContactModel.xsd"/>
+            <xsd:element name="findContact" type="tns:findContact"/>
+            <xsd:complexType name="findContact">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="_publicID" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="_firstName" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="_lastName" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="_phoneNumber" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="findContactResponse" type="tns:findContactResponse"/>
+            <xsd:complexType name="findContactResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="Return" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="Contact" type="cx:Contact"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="findContact">
+        <wsdl:part name="parameters" element="tns:findContact">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findContactResponse">
+        <wsdl:part name="parameters" element="tns:findContactResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="FindContactPortType">
+        <wsdl:operation name="findContact">
+            <wsdl:input name="findContact" message="tns:findContact">
+            </wsdl:input>
+            <wsdl:output name="findContactResponse" message="tns:findContactResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="FindContactSoapBinding" type="tns:FindContactPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="findContact">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findContact">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findContactResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="FindContact">
+        <wsdl:port name="FindContactPort" binding="tns:FindContactSoapBinding">
+            <soap:address location="http://localhost:8080/camel-xslt-poc/ws/FindContact"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

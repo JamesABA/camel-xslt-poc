@@ -1,11 +1,9 @@
 package com.businessagility.poc.types;
 
 /**
- * Created by JamesAyling on 24/04/2017.
- *
  * ABRequest.java
  *
- * POJO to define JSON message format used with AB tier.
+ * POJO to define JSON message format used with outbound messages
  */
 public class ABRequest {
 
